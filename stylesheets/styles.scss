@@ -1,0 +1,633 @@
+@import "normalize";
+
+$main-color: #11b189;
+
+%nostyle-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+@mixin r_t_w_i($url, $width, $height) {
+  width: $width;
+  height: $height;
+  background: url($url) no-repeat;
+  background-size: 100% 100%;
+  text-indent: 110%; /*這裡是讓文字開始時 縮排*/
+  overflow: hidden; /*這裡是文字溢出時 隱藏文字*/
+  white-space: nowrap; /*這邊是讓文字不要換行*/
+}
+
+html {
+  font-size: 16px;
+  font-family: "Noto Sans TC", sans-serif;
+  line-height: 1.4;
+  color: #555;
+}
+
+img {
+  max-width: 100%; //讓所有圖片不要衝出我們的設定寬
+}
+a {
+  color: #009ced;
+  text-decoration: none;
+
+  &:hover {
+    color: #0081c3;
+    text-decoration: underline;
+  }
+  /* :hover 當滑鼠停留在目標物時，會觸發hover */
+}
+
+// a:hover{
+//     color: #0081c3;
+//     text-decoration: underline;
+// }
+// /* :hover 當滑鼠停留在目標物時，會觸發hover */
+
+.container {
+  /*至中容器*/
+  width: 1080px;
+  margin: 0 auto;
+  /*設定頁面邊界值*/
+}
+
+.top-menu {
+  /* 在 <div class="top-menu"> 加入被景色，設定高度 */
+  background: mix($main-color, #000, 90);
+  height: 36px;
+
+  ul {
+    /*頂部留白部分，去除清單預設樣式*/
+    @extend %nostyle-list;
+    display: flex; /*強迫 ul區塊 從垂直變水平*/
+    justify-content: flex-end; /*將清單 移至最後面(可至排版網頁查詢)*/
+  }
+
+  a {
+    /*設定選單鈕的樣式*/
+    display: block; /*強迫 a區塊 呈現兩行*/
+    width: 90px;
+    height: 36px;
+    line-height: 36px; /*設定框線的 行高*/
+    color: #fff;
+    text-align: center; /*讓文字對齊*/
+    text-decoration: none;
+  }
+
+  a:hover {
+    /*雖然前面已經有 a:hover 但是這裡的權重比較大 所以會執行這一段的 a:hover*/
+    background: #ff6204; /* 這裡我們要讓選單可以觸發深橘色*/
+  }
+
+  i {
+    margin-right: 5px;
+  }
+}
+
+h1.logo {
+  /*這裡的 margin 要歸零，讓間距為0*/
+  margin: 0;
+
+  img {
+    /*修正圖片尺寸*/
+    width: 250px;
+    height: 62px;
+    display: block; /*強迫區塊化，這裡因為 img 所以可以加入長寬高*/
+    /*這裡要區塊化是因為 img 會有隱藏行段，所以我們需要區塊化去掉隱藏行段*/
+  }
+
+  a {
+    display: block; /*強迫區塊化 ，這裡要區塊化是因為 img 會有隱藏行段，所以我們需要區塊化去掉隱藏行段*/
+  }
+}
+
+.search {
+  position: relative;
+  input {
+    width: 285px;
+    height: 28px;
+    border: #ddd 2px solid; /*這裡將 選取器 邊框的底線改成實線*/
+    border-radius: 17px; /*這裡將 選取器 邊框變成圓潤的 (總高度/2) */
+
+    width: 250px;
+    padding-left: 35px; /*這裡將 search的內距向右調整*/
+  }
+
+  i {
+    /*這裡將 icon 向右移，移動到正確的位置*/
+    position: absolute;
+    top: 9px;
+    left: 9px;
+  }
+
+  input:focus {
+    outline: none;
+    border-color: #099ced;
+    box-shadow: #009ced 0 0 2px;
+  }
+}
+
+.top-block {
+  height: 80px;
+  /*為了方便觀察，所以加上顏色*/
+
+  .container {
+    display: flex; /*強迫 區塊 從垂直邊水平*/
+    justify-content: space-between; /*將物件 移至兩端(可至排版網頁查詢)*/
+    align-items: flex-end; /*將物件 移至底部(可至排版網頁查詢)*/
+    padding: 9px 0; /*(區塊高度 80px – logo 高度 62px)/2 = 9px */
+  }
+}
+
+/*這裡開始製作 主選單*/
+.main-menu {
+  height: 38px;
+  border-top: #ddd 1px solid; /*設定頂部的 樣式*/
+  border-bottom: #ddd 1px solid; /*設定底部的 樣式*/
+  button {
+    display: none;
+  }
+
+  ul {
+    @extend %nostyle-list; /*將預設樣式 改成 none*/
+    display: flex; /*強迫 ul區塊 從垂直變水平*/
+    /*justify-content: space-between;*/
+  }
+
+  li {
+    flex: 0 0 20%; /*這裡直接給 flex box 寬度*/
+  }
+
+  a {
+    /*設定選單鈕的樣式*/
+    display: block; /*a 是行內元素，這裡要變成區塊元素才能設定寬高*/
+    height: 38px; /*這裡和main-menu設定一樣的值，讓文字佔滿*/
+    line-height: 38px; /*設定框線的 行高*/
+    color: #3d4143;
+    text-align: center; /*讓文字對齊*/
+    text-decoration: none;
+  }
+
+  a:hover {
+    /*雖然前面已經有 a:hover 但是這裡的權重比較大 所以會執行這一段的 a:hover*/
+    background: $main-color;
+    transition-property: background;
+    transition-duration: 0.3s;
+    background: darken($main-color, 30);
+    color: #fff;
+  }
+}
+
+/*這裡開始製作圖片*/
+.index-image {
+  height: 400px; /*指定圖片高度*/
+  background: url(../images/index-image.jpg)
+    /*background 是簡寫值，所以可以直接使用; ../ 在這裡表示上一層*/ center
+    no-repeat; /*為甚麼要 center center*/
+  background-size: cover; /*cover 可以自動幫你填滿區塊(CSS3適用)*/
+  .container {
+    //改用置中容器當作參照容器 用來定位
+    position: relative;
+    height: 400px; //因為 h2 是用絕對定位(不會影響其他人) 所以無法撐開 container ， 所以我們可以找上一層的高度來設定。
+  }
+
+  h2 {
+    font-size: 50px;
+    /*color: #fff; 如果要支援舊版本瀏覽器 可以用這個方法解決，先寫電腦看得懂的 再寫看不懂的rgba*/
+    color: rgba(255, 255, 255, 0.8);
+    text-shadow: rgba(rgb(255, 255, 255), 0.8) 0 0 0px, rgba(#000, 0.8) 0 0 50px; //將 第一個rgba的值改為0 0 5px 會灰灰的
+    position: absolute; /*這裡是絕對定位*/
+    margin: 0 0 0 150px;
+    left: 50%; /*絕對定位可以用 % 來定位*/
+    bottom: 80px; /*這裡為甚麼是bottom??????????????????*/
+
+    span {
+      display: block;
+      position: relative; /*position 如果是 static 會推不動*/
+      left: 2em;
+    }
+  }
+}
+
+/*這裡開始製作新品訊息*/
+.new-items {
+  padding: 40px 0; /*40px(上下)  0(左右)*/
+  ul {
+    @extend %nostyle-list; /*將預設樣式 改成 none*/
+    display: flex; /*強迫 ul區塊 從垂直變水平*/
+    justify-content: space-between; /*左邊是針對容器，右邊是針對元素*/
+  }
+
+  li {
+    flex: 0 0 340px; /*回去看講義??????????????*/
+  }
+}
+
+/*這裡開始製作貓奴選物*/
+.featured-item {
+  background: #eee;
+  padding: 40px 0;
+
+  h2 {
+    color: #ff9204;
+    font-size: 2rem;
+    text-align: center; /*字中對齊*/
+    margin: 0 0 30px; /*間距30*/
+  }
+
+  h3 {
+    margin-top: 0;
+    font-size: 1.5rem; /*為甚麼是1.5rem????????????????????*/
+  }
+
+  .user {
+    float: right;
+    margin-top: 30px;
+
+    img {
+      width: 80px;
+      height: 80px;
+      border-radius: 40px;
+      margin-left: 10px;
+      vertical-align: middle; /*這裡是唯一一種 置中時用 middle */
+    }
+  }
+
+  .item-content {
+    display: flex; /*將item-content設定為容器*/
+  }
+
+  .item-img {
+    flex: 0 0 360px;
+    margin-right: 30px; /*看到間距要想到 margin*/
+  }
+
+  .item-text {
+    flex-grow: 1;
+  }
+}
+
+/*這裡開始製作最新快訊*/
+.new-and-principle {
+  padding: 40px 0;
+
+  .container {
+    display: flex; /*將.container設定為容器*/
+  }
+  .news {
+    flex: 1; //這裡等於 flex-grow 自動填滿寬度
+    min-width: 0; /*因為 flex 會跟內容文字同寬 所以需要用min-width解決*/
+
+    h2 {
+      margin: 0 0 20px;
+      @include r_t_w_i("../images/news-title@2x.png", 120px, 36px);
+      // width: 120px;
+      // height: 36px;
+      // margin: 0 0 20px;
+      // background: url(../images/news-title@2x.png) no-repeat;
+      // background-size: 100% 100%;
+      // text-indent: 110%; /*這裡是讓文字開始時 縮排*/
+      // overflow: hidden;  /*這裡是文字溢出時 隱藏文字*/
+      // white-space: nowrap;   /*這邊是讓文字不要換行*/
+    }
+
+    ul {
+      @extend %nostyle-list;
+    }
+
+    li {
+      padding: 8px;
+      border-bottom: #ddd 1px dotted;
+    }
+
+    a {
+      display: block;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+  }
+
+  .news li:nth-child(even) {
+    background: #f5f5f5;
+  }
+}
+
+.principle {
+  flex: 0 0 280px;
+  margin-left: 30px; /*這裡用 margin 給他一個固定值 這是為了讓頁面縮放可以成立*/
+  display: flex; /*要先變成容器才能調整排序*/
+  flex-direction: column-reverse; //從下往上
+  color: #fff;
+
+  h2 {
+    height: 60px;
+    margin: 0;
+    padding: 20px;
+    background: #5f5547;
+    position: relative; /*用絕對定位之前 需要一個參照容器  h2*/
+
+    &::before {
+      //這裡製作貓頭鷹動畫
+      content: "";
+      display: inline-block; //這裡用 inline 是不讓它換行
+      width: 60px;
+      height: 60px;
+      background: #fff url(../images/cat-head-animate@2x.png) //匯入圖片
+        center no-repeat;
+      background-size: 60px 300px; //調整圖片大小
+      border-radius: 50%;
+      vertical-align: middle;
+
+      position: relative;
+      animation-name: moving-box;
+      animation-duration: 1s;
+      animation-iteration-count: infinite;
+      animation-timing-function: steps(4);
+      @keyframes moving-box {
+        //製作動畫
+        0% {
+          background-position: 0 0;
+        }
+        50% {
+          background-position: 0 -240px;
+        }
+        100% {
+          background-position: 0 0px;
+        }
+      }
+    }
+
+    &::after {
+      //這邊製作 三角形
+      content: "";
+      display: block;
+      position: absolute;
+      border: transparent 8px solid;
+      border-top: #ff9204 8px solid;
+      top: 0;
+      left: 40px;
+    }
+
+    img {
+      width: 60px;
+      height: 60px;
+      background: #fff;
+      border-radius: 30px;
+      margin-left: 5px;
+      vertical-align: middle; /*這裡是唯一一種 置中時用 middle */
+      display: none; //這裡隱藏一開始的 h2 img
+    }
+  }
+
+  .principle-content {
+    flex-grow: 1; /*讓內文自動填滿 彈性*/
+    background: #11b189;
+    padding: 10px;
+
+    li {
+      margin: 10px 0;
+      font-size: 18px;
+    }
+  }
+}
+
+/*這裡開始製作頁尾*/
+.page-footer {
+  background: #3d4143;
+  padding: 40px 0;
+  color: #fff;
+  text-align: center;
+
+  ul {
+    @extend %nostyle-list;
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+  }
+
+  li {
+    flex: 0 0 340px;
+  }
+  .business-hours {
+    flex: 0 0 100%;
+    margin: 20px 0;
+  }
+}
+
+//這裡開始修正頁面縮放
+@media screen and (max-width: 1140px) {
+  //如果頁面寬度小於1140，將會執行以下內容  注意 : media qurey 沒有權重 .container跟上面的一樣 所以要寫在最下面，否則會被覆蓋
+  .container {
+    //container 寬度 縮小到 820
+    width: 820px;
+  }
+
+  .index-image h2 {
+    //這裡修正圖片內文字的位置
+    left: auto;
+    margin: 0;
+    right: 2em; //這裡是因為 spen 有將文字右推 所以我們要在這裡將他推回 container
+  }
+
+  .new-items li {
+    flex: 0 0 260px;
+  }
+
+  .page-footer li {
+    flex: 0 0 260px;
+  }
+}
+
+@media screen and (max-width: 880px) {
+  .container {
+    width: 740px;
+  }
+
+  .new-items {
+    ul {
+      flex-direction: column; //改變排列方式 垂直
+    }
+    //因為要讓內文垂直排列 所以我們自己在加一個容器
+
+    li {
+      display: flex;
+      flex-basis: auto;
+      margin-bottom: 20px;
+    }
+
+    li:last-child {
+      margin-bottom: 0;
+    }
+    li > a {
+      flex: 0 0 200px;
+      margin-right: 20px;
+    }
+
+    li > div {
+      //因為我們不能保證內文的長度 足夠 所以我們需要讓他自動延展 保持一樣的寬度
+      flex: 1;
+    }
+    li h2 {
+      margin-top: 0;
+    }
+  }
+
+  .new-and-principle .container {
+    flex-direction: column; //改變排列方式 垂直
+  }
+
+  .news {
+    margin-bottom: 40px;
+  }
+
+  .principle {
+    margin-left: 0;
+    flex-direction: column;
+    flex-basis: auto;
+    h2 {
+      background: transparent;
+      color: rgb(37, 37, 37);
+      padding: 0;
+    }
+    h2::before {
+      border: $main-color 5px solid;
+    }
+    h2::after {
+      display: none;
+    }
+
+    ol {
+      list-style: none;
+    }
+    ol li {
+      position: relative; //這裡是為了讓下面ol li::before可以使用 絕對定位 所以給他一個相對位置
+    }
+
+    ol li::before {
+      //作圓形
+      width: 20px;
+      height: 20px;
+      display: block;
+      border-radius: 50%;
+      background: #ddd;
+      color: $main-color;
+      text-align: center;
+      line-height: 20px;
+      position: absolute; //這裡因為需要將 編號 和內文分開 所以我們讓他超脫世俗
+      top: 2px;
+      left: -25px;
+    }
+
+    ol li:nth-child(1)::before {
+      content: "1";
+    }
+    ol li:nth-child(2)::before {
+      content: "2";
+    }
+    ol li:nth-child(3)::before {
+      content: "3";
+    }
+  }
+
+  .page-footer {
+    li {
+      flex: 0 0 100%;
+      // flex: auto;
+    }
+
+    ul {
+      flex-direction: column; //改變排列方式 垂直
+    }
+  }
+}
+
+@media screen and (max-width: 767px) {
+  //通常 iphon 的寬度大概就是這樣 所以我們可以用 767~768 觀察
+  .container {
+    width: 90%;
+  }
+
+  .item-content {
+    flex-direction: column;
+    // text-align: center;
+    .item-img {
+      flex-basis: 100%;
+      margin: 0;
+
+      img {
+        display: block; //先變成區塊 才能使用 margin 置中
+        margin: 0 auto; //置中
+      }
+    }
+  }
+  .featured-item h3 {
+    text-align: center;
+  }
+}
+
+@media screen and (max-width: 640px) {
+  .top-block {
+    height: auto;
+  }
+
+  .top-block .container {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  h1.logo {
+    margin-bottom: 10px;
+  }
+
+  .main-menu {
+    position: relative;
+    .container {
+      width: 100%;
+    }
+    button {
+      display: block;
+      background: #fff;
+      border: none;
+      width: 100%;
+      height: 40px;
+
+      i {
+        margin-left: 5px;
+      }
+    }
+
+    ul {
+      flex-direction: column;
+      position: absolute;
+      top: 40px;
+      width: 100%;
+      background: rgba(#fff, 0.9);
+      z-index: 5; //這裡數字越大離使用者越近
+    }
+  }
+}
+
+@media screen and (max-width: 580px) {
+  .index-image h2 {
+    font-size: 35px;
+  }
+  .new-items {
+    li {
+      flex-direction: column;
+      align-items: center;
+      
+      h2 {
+      text-align: center;
+      margin-top: 10px;
+    }
+    }
+    
+  }
+
+  .new-and-principle .news a {
+    white-space: normal;
+  }
+}
+
